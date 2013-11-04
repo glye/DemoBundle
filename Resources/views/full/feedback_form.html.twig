@@ -1,0 +1,89 @@
+{% extends "eZDemoBundle::pagelayout.html.twig" %}
+
+{# Customizing the error message to add a css class since form_errors doesn't accept parameters #}
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="form-errors">
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block content %}
+
+<section class="content-view-full">
+    <div class="row">
+        <div class="span8">
+
+            <div class="attribute-header">
+                <h1>{{ ez_render_field( content, 'name' ) }}</h1>
+            </div>
+
+            <div class="attribute-short">
+                {{ ez_render_field( content, 'description' ) }}
+            </div>
+
+            {% if display_sent_msg == true %}
+                <p class="form-success">
+                    {{ "Thank you for your message, we will get back to you as soon as possible."|trans }}
+                </p>
+            {% else %}
+                {{ form_start( form ) }}
+
+                    <div class="row">
+                        {{ form_errors( form ) }}
+                    </div>
+
+                    <div class="attribute-first-name">
+                        {{ form_errors( form.firstName ) }}
+                        {{ form_label( form.firstName, 'First Name'|trans ) }}
+                        {{ form_widget( form.firstName, { 'attr': {'class': 'span4'}} ) }}
+                    </div>
+
+                    <div class="attribute-last-name">
+                        {{ form_errors( form.lastName ) }}
+                        {{ form_label( form.lastName, 'Last Name'|trans ) }}
+                        {{ form_widget( form.lastName, { 'attr': {'class': 'span4'}} ) }}
+                   </div>
+
+                    <div class="attribute-email">
+                        {{ form_errors( form.email ) }}
+                        {{ form_label( form.email, 'Email'|trans ) }}
+                        {{ form_widget( form.email, { 'attr': {'class': 'span6'}} ) }}
+                    </div>
+
+                    <div class="attribute-subject">
+                        {{ form_errors( form.subject ) }}
+                        {{ form_label( form.subject, 'Subject'|trans ) }}
+                        {{ form_widget( form.subject, { 'attr': {'class': 'span6'}} ) }}
+                    </div>
+
+                    <div class="attribute-country">
+                        {{ form_errors( form.country ) }}
+                        {{ form_label( form.country, 'Country'|trans ) }}
+                        {{ form_widget( form.country ) }}
+                    </div>
+
+                    <div class="attribute-message">
+                        {{ form_errors( form.message ) }}
+                        {{ form_label( form.message, 'Subject'|trans ) }}
+                        {{ form_widget( form.message, { 'attr': {'class': 'span8', 'rows': '10'} } ) }}
+                    </div>
+
+                    <div class="content-action">
+                        {{ form_widget( form.save, { 'label': "Send form"|trans, 'attr': { 'class': 'btn btn-warning pull-right' } } ) }}
+                    </div>
+
+                {{ form_end( form ) }}
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

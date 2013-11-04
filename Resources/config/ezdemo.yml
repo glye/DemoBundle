@@ -39,6 +39,11 @@ system:
                     template: "eZDemoBundle:full:place_list.html.twig"
                     match:
                         Identifier\ContentType: [place_list]
+                feedback_form:
+                    controller: "eZDemoBundle:FeedbackForm:showFeedbackForm"
+                    template: "eZDemoBundle:full:feedback_form.html.twig"
+                    match:
+                        Identifier\ContentType: "feedback_form"
 
             line:
                 article:
